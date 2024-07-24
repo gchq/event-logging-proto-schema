@@ -1,0 +1,13 @@
+// event_logging/v4/hash_complex_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "buf/validate/validate.proto";
+
+// Describes the output of a hash function and the type of has function used.
+message HashComplexType {
+  // The type of hashing algorithm used, e.g. MD5, SHA-256, etc.
+  string type = 1;
+  // The value obtained from applying a hash function (e.g. MD5, SHA-256, etc.) to the contents of the file.
+  string value = 2;
+}

@@ -1,0 +1,36 @@
+// event_logging/v4/media_complex_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "event_logging/v4/classification_complex_type.proto";
+import "event_logging/v4/data_complex_type.proto";
+import "event_logging/v4/media_type_simple_type.proto";
+import "buf/validate/validate.proto";
+
+// Used to describe media added or removed from a computer system, or as a location for reading and writing files.
+message MediaComplexType {
+  // The type of the removable media, e.g. MemoryCard
+  MediaTypeSimpleType type = 1 [
+    (buf.validate.field).required = true
+  ];
+  // The identifier for the removable media. This may be an identifier provided by the media (e.g. the Card Identification or CID of an SD card) or assigned by device monitoring software.
+  string id = 2;
+  // A friendly name for the media, possibly assigned by device monitoring system..
+  string name = 3;
+  // Indicates if this media is removable, e.g. USB storage device or soft media such as DVD.
+  bool removable = 4;
+  // Indicates if a device has read-write access. Most devices are read-write so this is assumed to be true and can therefore be omitted where this is the case.
+  bool read_write = 5;
+  // The capacity of the media in bytes.
+  uint32 capacity = 6 [
+    (buf.validate.field).uint32.gt = 0
+  ];
+  // The classification of the media.
+  ClassificationComplexType classification = 7;
+  // Any other event data that does not fit into a schema element but may be useful for the purpose of audit.
+  repeated DataComplexType data = 8 [
+    (buf.validate.field).repeated = {
+      min_items: 0
+    }
+  ];
+}

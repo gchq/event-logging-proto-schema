@@ -1,0 +1,34 @@
+// event_logging/v4/install_complex_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "event_logging/v4/data_complex_type.proto";
+import "event_logging/v4/hardware_complex_type.proto";
+import "event_logging/v4/media_complex_type.proto";
+import "event_logging/v4/outcome_complex_type.proto";
+import "event_logging/v4/software_complex_type.proto";
+import "buf/validate/validate.proto";
+
+// Describes the installation of either hardware or software.
+message InstallComplexType {
+  // Description of the software that was installed/uninstalled.
+  SoftwareComplexType software = 1 [
+    (buf.validate.field).required = true
+  ];
+  // Description of the hardware that was installed/uninstalled.
+  HardwareComplexType hardware = 2 [
+    (buf.validate.field).required = true
+  ];
+  // Description of the media that was installed/uninstalled.
+  MediaComplexType media = 3 [
+    (buf.validate.field).required = true
+  ];
+  // The outcome of the (un)installation.
+  OutcomeComplexType outcome = 11;
+  // Any other event data that does not fit into a schema element but may be useful for the purpose of audit.
+  repeated DataComplexType data = 12 [
+    (buf.validate.field).repeated = {
+      min_items: 0
+    }
+  ];
+}

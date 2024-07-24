@@ -1,0 +1,19 @@
+// event_logging/v4/organisation_complex_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "buf/validate/validate.proto";
+
+// Describes an organisation optionally qualified by its country
+message OrganisationComplexType {
+  // An ISO 3166 alpha-3 trigraph for the country the organisation belongs to. E.g. 'GBR'.
+  string country = 1 [
+    (buf.validate.field).string = {
+      pattern: "([A-Z]{3})"
+    }
+  ];
+  // The code or name for the organisation. E.g. 'Group HQ', 'Telecoms Division', etc.
+  string organisation = 2 [
+    (buf.validate.field).required = true
+  ];
+}

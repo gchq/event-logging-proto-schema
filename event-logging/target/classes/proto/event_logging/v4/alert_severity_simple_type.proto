@@ -1,0 +1,15 @@
+// event_logging/v4/alert_severity_simple_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "buf/validate/validate.proto";
+
+// The severities that can be assigned to an alert, e.g. an error in a system or the alert from the detection of malware. They indicate how far-reaching the symptoms of the cause of the alert are.
+enum AlertSeveritySimpleType {
+  // Default
+  ALERT_SEVERITY_SIMPLE_TYPE_UNSPECIFIED = 0;
+  ALERT_SEVERITY_SIMPLE_TYPE_INFO = 1;
+  ALERT_SEVERITY_SIMPLE_TYPE_MINOR = 2;
+  ALERT_SEVERITY_SIMPLE_TYPE_MAJOR = 3;
+  ALERT_SEVERITY_SIMPLE_TYPE_CRITICAL = 4;
+}

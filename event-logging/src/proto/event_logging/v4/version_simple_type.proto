@@ -1,0 +1,12 @@
+// event_logging/v4/version_simple_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "buf/validate/validate.proto";
+
+// Type for specifying the version numbers of XML documents that are supported by this version of the XMLSchema.
+enum VersionSimpleType {
+  // Default
+  VERSION_SIMPLE_TYPE_UNSPECIFIED = 0;
+  VERSION_SIMPLE_TYPE_4_0_2 = 1;
+}

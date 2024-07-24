@@ -1,0 +1,14 @@
+// event_logging/v4/any_content_complex_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "buf/validate/validate.proto";
+
+// This type is used to contain any content conforming to an agreed format/specification that is defined outside this XML Schema.
+message AnyContentComplexType {
+  // String to describe the format type and specification of the content, e.g. JSON or XML. The valid values are defined outside this XML Schema.
+  string content_type = 1;
+  // Defines the version of data structure specification.
+  string version = 2;
+  string any = 3;
+}

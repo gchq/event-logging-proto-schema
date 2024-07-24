@@ -1,0 +1,38 @@
+// event_logging/v4/location_complex_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "event_logging/v4/coordinates_complex_type.proto";
+import "buf/validate/validate.proto";
+
+// Describes the geographic location of the device.
+message LocationComplexType {
+  // The ISO-3166 country short name, e.g. 'UNITED KINGDOM OF GREAT BRITAIN AND NORTHERN IRELAND' or 'ANDORRA'
+  string country = 1;
+  // The location State or Province.
+  string state = 2;
+  // The location City.
+  string city = 3;
+  // The location Town.
+  string town = 4;
+  // The name of the site of the location, e.g. where an organisation has multiple distinct sites or campuses. Specifying the site is particularly important when the sites are in the same town/city.
+  string site = 5;
+  // The name of the building.
+  string building = 6;
+  // The floor of the building that the location refers to.
+  int32 floor = 7;
+  // The identifier (e.g. name) of the room that the location refers to.
+  string room = 8;
+  // The identifier (e.g. name) of the desk that the location refers to.
+  string desk = 9;
+  // The identifier for the rack/cabinet where the location refers to a rack mounted device, e.g. a rack mounted 4U server in a cabinet.
+  string rack = 10;
+  // The position of the device where the location refers to a rack mounted device in a rack/cabinet. E.g. where a 4U device occupies U positions 1-4 in a cabinet (numbered from the bottom of the cabinet, starting from 1), the position would be '1'.
+  string position = 11;
+  // The timezone name for the location as defined by the IANA Timezone Database (https://www.iana.org/time-zones), e.g. 'Europe/London' or 'Australia/NSW'.
+  string time_zone_name = 41;
+  // The geographic coordinates of the location (i.e. the latitude/longitude).
+  CoordinatesComplexType coordinates = 42;
+  // The name of a zone within a building or site with some form of access control/monitoring for entry/exit to the zone.
+  string access_zone = 43;
+}

@@ -1,0 +1,42 @@
+// event_logging/v4/device_complex_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "event_logging/v4/classification_complex_type.proto";
+import "event_logging/v4/data_complex_type.proto";
+import "event_logging/v4/location_complex_type.proto";
+import "buf/validate/validate.proto";
+
+// Describes a device, e.g. a workstation, server or item of network infrastructure.
+message DeviceComplexType {
+  // Identifier used to uniquely identify the device within the organisation's asset register/system. Also, this can be used to identify a device that does not have HostName/IPAddress/MACAddress.
+  string id = 1;
+  // A descriptive name of the device, e.g. 'Sun Fire X4600', 'HP LaserJet 4+'.
+  string name = 2;
+  // The security classification associated with this device.
+  ClassificationComplexType classification = 3;
+  // The network host name of the device, e.g. someserver.somenet.org.uk. Ideally this field should always contain a fully qualified DNS name of the host.
+  string host_name = 4;
+  // The network IP address of the device, e.g. 192.168.0.3. Ideally this should always be supplied.
+  string ip_address = 5 [
+    (buf.validate.field).string = {
+      pattern: "((25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)(\\.(25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)){3})|(::)|(([0-9a-f]{1,4}:)(:[0-9a-f]{1,4}){1,6})|(([0-9a-f]{1,4}:){1,2}(:[0-9a-f]{1,4}){1,5})|(([0-9a-f]{1,4}:){1,3}(:[0-9a-f]{1,4}){1,4})|(([0-9a-f]{1,4}:){1,4}(:[0-9a-f]{1,4}){1,3})|(([0-9a-f]{1,4}:){1,5}(:[0-9a-f]{1,4}){1,2})|(([0-9a-f]{1,4}:){1,6}(:[0-9a-f]{1,4}))|(([0-9a-f]{1,4}:){1,7}:)|(:(:[0-9a-f]{1,4}){1,7})|(([0-9a-f]{1,4}:){7}[0-9a-f]{1,4})|(::(25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)(\\.(25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)){3})|(([0-9a-f]{1,4}:)(:[0-9a-f]{1,4}){1,4}:(25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)(\\.(25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)){3})|(([0-9a-f]{1,4}:){1,2}(:[0-9a-f]{1,4}){1,3}:(25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)(\\.(25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)){3})|(([0-9a-f]{1,4}:){1,3}(:[0-9a-f]{1,4}){1,2}:(25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)(\\.(25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)){3})|(([0-9a-f]{1,4}:){1,4}(:[0-9a-f]{1,4}):(25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)(\\.(25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)){3})|(([0-9a-f]{1,4}:){1,5}:(25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)(\\.(25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)){3})|(:(:[0-9a-f]{1,4}){1,5}:(25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)(\\.(25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)){3})|(([0-9a-f]{1,4}:){6}(25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)(\\.(25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)){3})"
+    }
+  ];
+  // The Media Access Control (MAC) address of the device.
+  string mac_address = 6 [
+    (buf.validate.field).string = {
+      pattern: "([0123456789ABCDEF]{2}(-[0123456789ABCDEF]{2}){5})|([0123456789ABCDEF]{2}(:[0123456789ABCDEF]{2}){5})"
+    }
+  ];
+  // The network port that is being used on the device, e.g. 443.
+  int32 port = 7;
+  // Describes the geographic location of the device.
+  LocationComplexType location = 8;
+  // Any other event data that does not fit into a schema element but may be useful for the purpose of audit.
+  repeated DataComplexType data = 9 [
+    (buf.validate.field).repeated = {
+      min_items: 0
+    }
+  ];
+}

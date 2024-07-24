@@ -1,0 +1,20 @@
+// event_logging/v4/hardware_type_simple_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "buf/validate/validate.proto";
+
+// The types of hardware that can be added or removed from a system.
+enum HardwareTypeSimpleType {
+  // Default
+  HARDWARE_TYPE_SIMPLE_TYPE_UNSPECIFIED = 0;
+  HARDWARE_TYPE_SIMPLE_TYPE_OPTICAL_DRIVE = 1;
+  HARDWARE_TYPE_SIMPLE_TYPE_HARD_DISK = 2;
+  HARDWARE_TYPE_SIMPLE_TYPE_USB_MASS_STORAGE = 3;
+  HARDWARE_TYPE_SIMPLE_TYPE_PRINTER = 4;
+  HARDWARE_TYPE_SIMPLE_TYPE_MODEM = 5;
+  HARDWARE_TYPE_SIMPLE_TYPE_KEYBOARD = 6;
+  HARDWARE_TYPE_SIMPLE_TYPE_MOUSE = 7;
+  HARDWARE_TYPE_SIMPLE_TYPE_WEBCAM = 8;
+  HARDWARE_TYPE_SIMPLE_TYPE_OTHER = 9;
+}

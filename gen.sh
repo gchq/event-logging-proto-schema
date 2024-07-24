@@ -1,0 +1,1 @@
+protoc --proto_path=/home/stroomdev66/work/schema2proto2/event-logging/src/proto --java_out=/home/stroomdev66/work/schema2proto2/build/gen /home/stroomdev66/work/schema2proto2/event-logging/src/proto/event_logging/v4/*.proto

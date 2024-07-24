@@ -1,0 +1,138 @@
+// event_logging/v4/search_complex_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "event_logging/v4/any_content_complex_type.proto";
+import "event_logging/v4/classification_complex_type.proto";
+import "event_logging/v4/data_complex_type.proto";
+import "event_logging/v4/meta_data_tags_complex_type.proto";
+import "event_logging/v4/multi_object_complex_type.proto";
+import "event_logging/v4/outcome_complex_type.proto";
+import "event_logging/v4/permission_attribute_simple_type.proto";
+import "event_logging/v4/query_complex_type.proto";
+import "event_logging/v4/user_complex_type.proto";
+import "buf/validate/validate.proto";
+
+// Contains a criteria and describes the outcome of the event.
+message SearchComplexType {
+  // This element can be used to supply any metadata relating to an object as long as it conforms to an allowed format/specification (defined outside this XML Schema). This can be used for adding metadata to the event after receipt.
+  repeated AnyContentComplexType meta = 1 [
+    (buf.validate.field).repeated = {
+      min_items: 0
+    }
+  ];
+  // The type of the object in question and specific to the object type from the list above, e.g. a 'Resource' object may have a type such as 'image' or 'script'.
+  string type = 2;
+  // An identifier for the object, e.g a document ID in a document management system. This ID is likely to be specific to the system that generated the event.
+  string id = 3;
+  // The name of the object, e.g. a filename.
+  string name = 4;
+  // Human readable description of what the object is.
+  string description = 5;
+  // Any classification, protective marking or restrictions placed on the object, e.g. for commercially sensitive reports or user health records.
+  ClassificationComplexType classification = 6;
+  // Any state information about the object, e.g. 'Archived'.
+  string state = 7;
+  // Any groups associated with the object, e.g. group membership of a user account.
+  GroupsComplexType groups = 8;
+  // The collection of permissions associated with the object, e.g. write access being granted to a list of named users.
+  PermissionsType permissions = 9;
+  // Metadata tags that can be used for additional object tagging or categorisation. Object tagging allows for the labelling (or filtering) of objects using words that label, categorise or group similar items, using a taxonomy defined outside this schema. For example, an email could be tagged with tags like 'internal', 'spam', 'external', 'rich-content', etc.
+  MetaDataTagsComplexType tags = 10;
+  // A collection of Datasource definitions that are referenced by the criteria/query
+  DataSourcesType data_sources = 21;
+  // Structure used to describe the query associated with a search event.
+  QueryComplexType query = 22;
+  // Details of the page (or sub-set) of results actually displayed/returned to the user, if known at query time.
+  ResultPageType result_page = 23;
+  // The total number of results returned by the query, if known at query time. In situations where only a sub-set of results are displayed/returned to the user then this element represents the count of ALL results and ResultPage should be used to provide details of which results are actually viewed/returned by the user.
+  uint32 total_results = 24 [
+    (buf.validate.field).uint32.gte = 0
+  ];
+  // Describes the results returned by the search if they are known at the time of the Search event (a synchronous search). If the results are not know at execution time (an asynchronous search) and will be viewed as part of a separate event then View/SearchResults can be used to model that event.
+  MultiObjectComplexType results = 25;
+  // Used to determine if the action was successful. If omitted it is assumed that the event was successful and was permitted.
+  OutcomeComplexType outcome = 31;
+  // Any other event data that does not fit into a schema element but may be useful for the purpose of audit.
+  repeated DataComplexType data = 32 [
+    (buf.validate.field).repeated = {
+      min_items: 0
+    }
+  ];
+
+  // The collection of permissions associated with the object, e.g. write access being granted to a list of named users.
+  message PermissionsType {
+    // A permission rule associated with an object, e.g. read and write access being granted to a user.
+    repeated PermissionType permission = 1 [
+      (buf.validate.field).repeated = {
+        min_items: 1
+      }
+    ];
+  
+    // A permission rule associated with an object, e.g. read and write access being granted to a user.
+    message PermissionType {
+      // A user that has been granted (or is prevented from having) some form of permission.
+      UserComplexType user = 1 [
+        (buf.validate.field).required = true
+      ];
+      // A named group of users that has been granted (or is prevented from having) some form of permission.
+      GroupComplexType group = 2 [
+        (buf.validate.field).required = true
+      ];
+      // The permission attributes that have been explicitly allowed.
+      repeated PermissionAttributeSimpleType allow = 11 [
+        (buf.validate.field).repeated = {
+          min_items: 0,
+          items: {
+            enum: {
+              defined_only: true
+            }
+          }
+        }
+      ];
+      // The permission attributes that have been explicitly denied.
+      repeated PermissionAttributeSimpleType deny = 12 [
+        (buf.validate.field).repeated = {
+          min_items: 0,
+          items: {
+            enum: {
+              defined_only: true
+            }
+          }
+        }
+      ];
+    }
+  }
+  // A collection of Datasource definitions that are referenced by the criteria/query
+  message DataSourcesType {
+    // The name or path of one or more datasources or datasets that are used by a criteria/query, e.g. 'EuroVoc XML distribution' or 'hdfs://mynamenode:8020/datasets/hr/grades.xml'
+    repeated string data_source = 1 [
+      (buf.validate.field).repeated = {
+        min_items: 1
+      }
+    ];
+  }
+  // Details of the page (or sub-set) of results actually displayed/returned to the user, if known at query time.
+  message ResultPageType {
+    // The number of pages/sets that make up the complete result set.
+    uint32 total_pages = 1 [
+      (buf.validate.field).uint32.gte = 0
+    ];
+    // The maximum number of results that will be displayed per page. E.g. 10 results per page.
+    uint32 per_page = 2 [
+      (buf.validate.field).uint32.gte = 0
+    ];
+    // The number of the page/set of results displayed/returned to the user, e.g. 3 out of 24 pages.
+    uint32 page_number = 3 [
+      (buf.validate.field).uint32.gte = 0
+    ];
+    // The index of the first result in the page out of the full result set (inclusive), e.g. 11 (in the case of showing results 11-20 of 453)
+    uint32 from = 4 [
+      (buf.validate.field).uint32.gte = 0
+    ];
+    // The index of the last result in the page out of the full result set (inclusive), e.g. 20 (in the case of showing results 11-20 of 453)
+    uint32 to = 5 [
+      (buf.validate.field).uint32.gte = 0
+    ];
+  }
+}

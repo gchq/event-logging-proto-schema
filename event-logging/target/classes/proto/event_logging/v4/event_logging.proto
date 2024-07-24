@@ -1,0 +1,61 @@
+// event_logging/v4/event_logging.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "event_logging/v4/any_content_complex_type.proto";
+import "event_logging/v4/classification_complex_type.proto";
+import "event_logging/v4/data_complex_type.proto";
+import "event_logging/v4/event_chain_complex_type.proto";
+import "event_logging/v4/event_detail_complex_type.proto";
+import "event_logging/v4/event_source_complex_type.proto";
+import "event_logging/v4/event_time_complex_type.proto";
+import "event_logging/v4/version_simple_type.proto";
+import "buf/validate/validate.proto";
+
+// The root element that contains multiple Event elements.
+message EventsType {
+  // The version of the schema that this document conforms to.
+  VersionSimpleType version = 1;
+  // This element contains data relating to the sharing of a set of events between different systems or organisations. The data contained within this element will confirm to a specification defined outside of this schema.
+  AnyContentComplexType sharing_data = 2;
+  // A single event that has occurred and been recorded.
+  repeated EventType event = 3 [
+    (buf.validate.field).repeated = {
+      min_items: 0
+    }
+  ];
+
+  // A single event that has occurred and been recorded.
+  message EventType {
+    // This element can be used to supply any metadata relating to the event as long as it conforms to an allowed format/specification (defined outside this XML Schema).
+    repeated AnyContentComplexType meta = 1 [
+      (buf.validate.field).repeated = {
+        min_items: 0
+      }
+    ];
+    // The classification for the event.
+    ClassificationComplexType classification = 2;
+    // This element contains data relating to the sharing of an event between different systems or organisations. The data contained within this element will confirm to a specification defined outside of this schema.
+    AnyContentComplexType sharing_data = 3;
+    // This element contains information about the time the event was created.
+    EventTimeComplexType event_time = 4 [
+      (buf.validate.field).required = true
+    ];
+    // This element details where the event came from, i.e. what generator created the event and on what device.
+    EventSourceComplexType event_source = 5 [
+      (buf.validate.field).required = true
+    ];
+    // This element describes the details of what happened in the event: the type of the event, why it happened and the event action.
+    EventDetailComplexType event_detail = 6 [
+      (buf.validate.field).required = true
+    ];
+    // This element can be used to create relationships between different events, i.e. where one event is the child of another.
+    EventChainComplexType event_chain = 7;
+    // Any other event data that does not fit into a schema element but may be useful for the purpose of audit. Can also be used for appending data about the event after it has been received or processed, e.g. for recording details relating to the processing of the event such as the feed name.
+    repeated DataComplexType data = 8 [
+      (buf.validate.field).repeated = {
+        min_items: 0
+      }
+    ];
+  }
+}

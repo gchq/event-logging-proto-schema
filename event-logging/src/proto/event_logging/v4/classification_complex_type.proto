@@ -1,0 +1,92 @@
+// event_logging/v4/classification_complex_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "event_logging/v4/access_control_groups_complex_type.proto";
+import "event_logging/v4/data_complex_type.proto";
+import "event_logging/v4/organisation_complex_type.proto";
+import "google/protobuf/timestamp.proto";
+import "buf/validate/validate.proto";
+
+// Describes the classification and access controls for an item such as a document, record, file, etc.
+message ClassificationComplexType {
+  // Optional full human-readable text of the protective marking that can combine the various elements in this Classification structure, e.g 'Commercial in Confidence'.
+  string text = 1;
+  // The originator or creator of the protectively marked item. The originator is described by an Organisation and optionally qualified by the organisation's Country.
+  OrganisationComplexType originator = 2;
+  // The custodian or owner of the protectively marked item. The custodian is responsible for the lifecycle of the marked item. The custodian is described by an Organisation and optionally qualified by the organisation's Country.
+  OrganisationComplexType custodian = 3;
+  // The classification of the protectively marked item. E.g. 'OFFICIAL', 'COMMERCIAL IN CONFIDENCE', 'CONFIDENTIAL', 'INTERNAL' etc.
+  string classification = 4;
+  // Additional descriptors or keywords to further qualify the Classification e.g. 'PERSONAL'
+  DescriptorsType descriptors = 5;
+  // The groups that a person must belong to AT LEAST ONE OF in order to be permitted to access the protectively marked item. E.g. 'HR' OR 'Auditors'.
+  AccessControlGroupsComplexType or_groups = 6;
+  // The groups that a person must belong to ALL OF in order to be permitted to access the protectively marked item. E.g. 'Sales' AND 'Management'.
+  AccessControlGroupsComplexType and_groups = 7;
+  // The nationalities of people permitted to access this protectively marked item. E.g. 'GBR', 'USA'
+  PermittedNationalitiesType permitted_nationalities = 8;
+  // The organisations permitted to access the protectively marked item.
+  PermittedOrganisationsType permitted_organisations = 9;
+  // Controls governing the onward handling of the protectively marked item
+  DisseminationControlsType dissemination_controls = 10;
+  // Describes the timescale and process for the disposal of the protectively marked item
+  DispositionType disposition = 11;
+  // Any other event data that does not fit into a schema element but may be useful for the purpose of audit.
+  repeated DataComplexType data = 12 [
+    (buf.validate.field).repeated = {
+      min_items: 0
+    }
+  ];
+
+  // Additional descriptors or keywords to further qualify the Classification e.g. 'PERSONAL'
+  message DescriptorsType {
+    // Descriptor or keyword to further qualify the Classification e.g. 'PERSONAL'
+    repeated string descriptor = 1 [
+      (buf.validate.field).repeated = {
+        min_items: 1
+      }
+    ];
+  }
+  // The nationalities of people permitted to access this protectively marked item. E.g. 'GBR', 'USA'
+  message PermittedNationalitiesType {
+    // An ISO 3166 alpha-3 trigraph for a nationality permitted to view this protectively marked item. E.g. 'GBR'.
+    repeated string nationality = 1 [
+      (buf.validate.field).repeated = {
+        min_items: 1,
+        items: {
+          string: {
+            pattern: "([A-Z]{3})"
+          }
+        }
+      }
+    ];
+  }
+  // The organisations permitted to access the protectively marked item.
+  message PermittedOrganisationsType {
+    // An organisation permitted to access the protectively marked item. The PermittedOrganisation is described by an Organisation and optionally qualified by the organisation's country code.
+    OrganisationComplexType permitted_organisation = 1 [
+      (buf.validate.field).required = true
+    ];
+  }
+  // Controls governing the onward handling of the protectively marked item
+  message DisseminationControlsType {
+    // A policy or control governing the onward handling of a protectively marked item. E.g. ORIGINATOR_CONTROLLED
+    repeated string dissemination_control = 1 [
+      (buf.validate.field).repeated = {
+        min_items: 1
+      }
+    ];
+  }
+  // Describes the timescale and process for the disposal of the protectively marked item
+  message DispositionType {
+    // Date/time that the disposition process must be enacted by
+    google.protobuf.Timestamp date = 1 [
+      (buf.validate.field).required = true
+    ];
+    // The action to be taken on expiry of the disposition date. E.g. 'DELETE' to delete the item.
+    string process = 2 [
+      (buf.validate.field).required = true
+    ];
+  }
+}

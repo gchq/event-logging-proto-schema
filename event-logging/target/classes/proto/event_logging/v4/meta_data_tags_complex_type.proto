@@ -1,0 +1,17 @@
+// event_logging/v4/meta_data_tags_complex_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "buf/validate/validate.proto";
+
+// Metadata tags that can be used for additional object tagging or categorisation. Object tagging allows for the labelling (or filtering) of objects using words that label, categorise or group similar items, using a taxonomy defined outside this schema. For example, an email could be tagged with tags like 'internal', 'spam', 'external', 'rich-content', etc.
+message MetaDataTagsComplexType {
+  // A categorisation tag or label
+  repeated string tag = 1 [
+    (buf.validate.field).string = {
+    },
+    (buf.validate.field).repeated = {
+      min_items: 1
+    }
+  ];
+}

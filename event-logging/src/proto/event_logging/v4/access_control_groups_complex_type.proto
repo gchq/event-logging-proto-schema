@@ -1,0 +1,15 @@
+// event_logging/v4/access_control_groups_complex_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "buf/validate/validate.proto";
+
+// Describes a set of groups used to control access to protectively marked items.
+message AccessControlGroupsComplexType {
+  // The name of an access control group that is used to control access to protectively marked items. E.g. 'HR', 'Auditors', 'Management', etc.
+  repeated string access_control_group = 1 [
+    (buf.validate.field).repeated = {
+      min_items: 1
+    }
+  ];
+}

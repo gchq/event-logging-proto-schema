@@ -1,0 +1,18 @@
+// event_logging/v4/threat_category_simple_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "buf/validate/validate.proto";
+
+// The types of threat assigned to detected malware.
+enum ThreatCategorySimpleType {
+  // Default
+  THREAT_CATEGORY_SIMPLE_TYPE_UNSPECIFIED = 0;
+  THREAT_CATEGORY_SIMPLE_TYPE_VIRUS = 1;
+  THREAT_CATEGORY_SIMPLE_TYPE_WORM = 2;
+  THREAT_CATEGORY_SIMPLE_TYPE_HACKING_TOOL = 3;
+  THREAT_CATEGORY_SIMPLE_TYPE_SPYWARE = 4;
+  THREAT_CATEGORY_SIMPLE_TYPE_TROJAN_HORSE = 5;
+  THREAT_CATEGORY_SIMPLE_TYPE_ADWARE = 6;
+  THREAT_CATEGORY_SIMPLE_TYPE_OTHER = 7;
+}

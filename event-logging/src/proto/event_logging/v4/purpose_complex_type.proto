@@ -1,0 +1,47 @@
+// event_logging/v4/purpose_complex_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "event_logging/v4/classification_complex_type.proto";
+import "event_logging/v4/data_complex_type.proto";
+import "buf/validate/validate.proto";
+
+// Describes the purpose and justification for the event along with details of any authorisations that were required for the event to happen.
+message PurposeComplexType {
+  // The classification of this task.
+  ClassificationComplexType classification = 1;
+  // A description of the task.
+  string subject = 2;
+  // Names of stakeholders.
+  string stakeholders = 3;
+  // Business case supporting task.
+  string justification = 4;
+  // Expected outcome from task.
+  string expected_outcome = 5;
+  // The authorisations that were granted to allow this event action to take place.
+  AuthorisationsType authorisations = 6;
+  // Any other event data that does not fit into a schema element but may be useful for the purpose of audit.
+  repeated DataComplexType data = 7 [
+    (buf.validate.field).repeated = {
+      min_items: 0
+    }
+  ];
+
+  // Details of authorisations that were granted to allow this event action to take place.
+  message AuthorisationsType {
+    // An authorisation that was granted to allow this event action to take place.
+    repeated AuthType auth = 1 [
+      (buf.validate.field).repeated = {
+        min_items: 1
+      }
+    ];
+  
+    // Details of an authorisation that was granted to allow this event action to take place.
+    message AuthType {
+      // The reference number, code or ID for the authorisation.
+      string ref_no = 1;
+      // A textual description of the authorisation or any additional detail.
+      string detail = 2;
+    }
+  }
+}

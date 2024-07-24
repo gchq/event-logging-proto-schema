@@ -1,0 +1,26 @@
+// event_logging/v4/software_complex_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "event_logging/v4/data_complex_type.proto";
+import "buf/validate/validate.proto";
+
+// Used to describe a software asset.
+message SoftwareComplexType {
+  // An identifier for the software asset.
+  string id = 1;
+  // The name of the software product.
+  string name = 2 [
+    (buf.validate.field).required = true
+  ];
+  // The version of the software product, e.g. v3.1.
+  string version = 3;
+  // The manufacturer of the software product, e.g. Borland
+  string manufacturer = 4;
+  // Any other event data that does not fit into a schema element but may be useful for the purpose of audit.
+  repeated DataComplexType data = 5 [
+    (buf.validate.field).repeated = {
+      min_items: 0
+    }
+  ];
+}

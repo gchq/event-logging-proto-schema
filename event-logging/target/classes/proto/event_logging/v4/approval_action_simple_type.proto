@@ -1,0 +1,16 @@
+// event_logging/v4/approval_action_simple_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "buf/validate/validate.proto";
+
+// The stages in an approval workflow. E.g. when presenting a document for review before publishing.
+enum ApprovalActionSimpleType {
+  // Default
+  APPROVAL_ACTION_SIMPLE_TYPE_UNSPECIFIED = 0;
+  APPROVAL_ACTION_SIMPLE_TYPE_APPROVE = 1;
+  APPROVAL_ACTION_SIMPLE_TYPE_ACCEPT = 2;
+  APPROVAL_ACTION_SIMPLE_TYPE_REJECT = 3;
+  APPROVAL_ACTION_SIMPLE_TYPE_REQUEST_APPROVAL = 4;
+  APPROVAL_ACTION_SIMPLE_TYPE_OTHER = 5;
+}

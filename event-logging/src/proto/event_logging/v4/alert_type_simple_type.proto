@@ -1,0 +1,18 @@
+// event_logging/v4/alert_type_simple_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "buf/validate/validate.proto";
+
+// The types of alert that can be fired, for example errors in an application log, malware or antivirus detection alerts.
+enum AlertTypeSimpleType {
+  // Default
+  ALERT_TYPE_SIMPLE_TYPE_UNSPECIFIED = 0;
+  ALERT_TYPE_SIMPLE_TYPE_VULNERABILITY = 1;
+  ALERT_TYPE_SIMPLE_TYPE_IDS = 2;
+  ALERT_TYPE_SIMPLE_TYPE_MALWARE = 3;
+  ALERT_TYPE_SIMPLE_TYPE_NETWORK = 4;
+  ALERT_TYPE_SIMPLE_TYPE_CHANGE = 5;
+  ALERT_TYPE_SIMPLE_TYPE_ERROR = 6;
+  ALERT_TYPE_SIMPLE_TYPE_OTHER = 7;
+}

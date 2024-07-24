@@ -1,0 +1,64 @@
+// event_logging/v4/logic_complex_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "event_logging/v4/term_complex_type.proto";
+import "buf/validate/validate.proto";
+
+// All of the enclosed items are to be treated as being AND together.
+message AndComplexType {
+  repeated ChoiceWrapperAndComplexType choice_wrapper = 1 [
+    (buf.validate.field).repeated = {
+      min_items: 0
+    }
+  ];
+
+  message ChoiceWrapperAndComplexType {
+    // Describes a field to search and what to search for using name, condition and value, e.g. Title Contains 'Fox' or Title Equals 'The Quick Brown Fox'.
+    TermComplexType term = 1;
+    // All of the enclosed items are to be treated as being AND'd together.
+    AndComplexType and = 2;
+    // All of the enclosed items are to be treated as being OR'd together.
+    OrComplexType or = 3;
+    // The enclosed structure operators and terms are negated.
+    NotComplexType not = 4;
+  }
+}
+// The enclosed structure operators and terms are negated.
+message NotComplexType {
+  repeated ChoiceWrapperNotComplexType choice_wrapper = 1 [
+    (buf.validate.field).repeated = {
+      min_items: 0
+    }
+  ];
+
+  message ChoiceWrapperNotComplexType {
+    // Describes a field to search and what to search for using name, condition and value, e.g. Title Contains 'Fox' or Title Equals 'The Quick Brown Fox'.
+    TermComplexType term = 1;
+    // All of the enclosed items are to be treated as being AND'd together.
+    AndComplexType and = 2;
+    // All of the enclosed items are to be treated as being OR'd together.
+    OrComplexType or = 3;
+    // The enclosed structure operators and terms are negated.
+    NotComplexType not = 4;
+  }
+}
+// All of the enclosed items are to be treated as being OR together.
+message OrComplexType {
+  repeated ChoiceWrapperOrComplexType choice_wrapper = 1 [
+    (buf.validate.field).repeated = {
+      min_items: 0
+    }
+  ];
+
+  message ChoiceWrapperOrComplexType {
+    // Describes a field to search and what to search for using name, condition and value, e.g. Title Contains 'Fox' or Title Equals 'The Quick Brown Fox'.
+    TermComplexType term = 1;
+    // All of the enclosed items are to be treated as being AND'd together.
+    AndComplexType and = 2;
+    // All of the enclosed items are to be treated as being OR'd together.
+    OrComplexType or = 3;
+    // The enclosed structure operators and terms are negated.
+    NotComplexType not = 4;
+  }
+}

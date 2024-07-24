@@ -1,0 +1,32 @@
+// default.proto at 0:0
+syntax = "proto3";
+package default;
+
+message PointInJourneyPattern_VersionedChildStructure {
+  string version = 1;
+  NoticeAssignmentsType notice_assignments = 2;
+
+  message NoticeAssignmentsType {
+    string aggregation = 1;
+    repeated ChoiceWrapper_NoticeAssignments_RelStructure choice_wrapper = 2;
+  }
+}
+message VersionedChildStructure {
+  string version = 1;
+}
+message NoticeAssignments_RelStructure {
+  string aggregation = 1;
+  repeated ChoiceWrapper_NoticeAssignments_RelStructure choice_wrapper = 2;
+}
+message PointInLinkSequence_VersionedChildStructure {
+  string version = 1;
+}
+message ContainmentAggregationStructure {
+  string aggregation = 1;
+}
+message UnrelatedTypeWithGlobalNoticeAssignments {
+  NoticeAssignments_RelStructure notice_assignments = 1;
+}
+message ChoiceWrapper_NoticeAssignments_RelStructure {
+  string notice_assignmentu = 1;
+}

@@ -1,0 +1,15 @@
+// event_logging/v4/authorisation_simple_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "buf/validate/validate.proto";
+
+// The type of action in an authorisation event, e.g. the modification of authorisation permissions/groups or the request to be authorised.
+enum AuthorisationSimpleType {
+  // Default
+  AUTHORISATION_SIMPLE_TYPE_UNSPECIFIED = 0;
+  // A request to be authorised to do a subsequent action.
+  AUTHORISATION_SIMPLE_TYPE_REQUEST = 1;
+  // The action of modifying the permissions/rules/groups involved in an authorisation process.
+  AUTHORISATION_SIMPLE_TYPE_MODIFY = 2;
+}

@@ -1,0 +1,55 @@
+// event_logging/v4/approval_complex_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "event_logging/v4/approval_action_simple_type.proto";
+import "event_logging/v4/data_complex_type.proto";
+import "event_logging/v4/multi_object_complex_type.proto";
+import "event_logging/v4/outcome_complex_type.proto";
+import "event_logging/v4/user_complex_type.proto";
+import "buf/validate/validate.proto";
+
+// This type describes an approval (or rejection) event in a workflow, e.g a workflow where a more privileged user is required to approve the work of another user.
+message ApprovalComplexType {
+  // The action that the approval event is capturing, e.g. Approve, Reject, etc.
+  ApprovalActionSimpleType action = 1 [
+    (buf.validate.field).required = true
+  ];
+  // An identifier associated with the approval step/process.
+  string id = 2;
+  // The object that this approval step (or request for approval) relates to, e.g. the document being approved.
+  MultiObjectComplexType subject = 3;
+  // The user(s) that requested the approval, e.g. jbloggs requesting approval from a manager for his finance report.
+  RequestorsType requestors = 4;
+  // The user(s) that are providing the approval, e.g. a user requesting approval from manager fsmith for his finance report.
+  ApproversType approvers = 5;
+  // The reason for the approval/rejection/request, e.g. why the approval was rejected.
+  string reason = 6;
+  // Used to determine if the action was successful. If omitted it is assumed that the event was successful and was permitted.
+  OutcomeComplexType outcome = 7;
+  // Any other event data that does not fit into a schema element but may be useful for the purpose of audit.
+  repeated DataComplexType data = 8 [
+    (buf.validate.field).repeated = {
+      min_items: 0
+    }
+  ];
+
+  // The user(s) that requested the approval, e.g. jbloggs requesting approval from a manager for his finance report.
+  message RequestorsType {
+    // A user that requested the approval, e.g. jbloggs requesting approval from a manager for his finance report.
+    repeated UserComplexType requestor = 1 [
+      (buf.validate.field).repeated = {
+        min_items: 1
+      }
+    ];
+  }
+  // The user(s) that are providing the approval, e.g. a user requesting approval from manager fsmith for his finance report.
+  message ApproversType {
+    // The user that is providing the approval, e.g. a user requesting approval from manager fsmith for his finance report.
+    repeated UserComplexType approver = 1 [
+      (buf.validate.field).repeated = {
+        min_items: 1
+      }
+    ];
+  }
+}

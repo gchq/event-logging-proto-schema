@@ -1,0 +1,33 @@
+// event_logging/v4/hardware_complex_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "event_logging/v4/data_complex_type.proto";
+import "event_logging/v4/hardware_type_simple_type.proto";
+import "buf/validate/validate.proto";
+
+// Used to describe a hardware item that may be added or removed from a system.
+message HardwareComplexType {
+  // The type of hardware, e.g. hard disk drive.
+  HardwareTypeSimpleType type = 1 [
+    (buf.validate.field).required = true
+  ];
+  // A unique identifier for the piece of hardware, e.g. an asset number.
+  string id = 2;
+  // A friendly name for the hardware, e.g. a name that has been defined in an asset management or device monitoring system.
+  string name = 3;
+  // The model name as defined by the manufacturer.
+  string model = 4;
+  // The manufacturer of the piece of hardware.
+  string manufacturer = 5;
+  // The capacity of the device in bytes.
+  uint32 capacity = 6 [
+    (buf.validate.field).uint32.gt = 0
+  ];
+  // Any other event data that does not fit into a schema element but may be useful for the purpose of audit.
+  repeated DataComplexType data = 7 [
+    (buf.validate.field).repeated = {
+      min_items: 0
+    }
+  ];
+}

@@ -1,0 +1,48 @@
+// event_logging/v4/process_complex_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "event_logging/v4/data_complex_type.proto";
+import "event_logging/v4/multi_object_complex_type.proto";
+import "event_logging/v4/outcome_complex_type.proto";
+import "event_logging/v4/process_action_simple_type.proto";
+import "event_logging/v4/process_type_simple_type.proto";
+import "buf/validate/validate.proto";
+
+// Describes various actions such as the startup/shutdown/install of operating systems, services, applications. It also describes the execution of operating system commands, shell scripts and batch processes.
+message ProcessComplexType {
+  // The action that the process event is capturing, e.g. Startup, Shutdown.
+  ProcessActionSimpleType action = 1 [
+    (buf.validate.field).required = true
+  ];
+  // The type of process, e.g. Application, OS, Service.
+  ProcessTypeSimpleType type = 2 [
+    (buf.validate.field).required = true
+  ];
+  // The name of the process.
+  string command = 3 [
+    (buf.validate.field).required = true
+  ];
+  // The process command arguments/parameters.
+  string arguments = 4;
+  // The system identifier for the process.
+  string process_id = 5;
+  // The thread identifier for the process.
+  uint32 thread_id = 6 [
+    (buf.validate.field).uint32.gt = 0
+  ];
+  // The rule that was triggered when this process event happened.
+  string rule = 7;
+  // Any objects used as input to the process.
+  MultiObjectComplexType input = 8;
+  // Any objects output by the process
+  MultiObjectComplexType output = 9;
+  // Used to determine if the action was successful. If omitted it is assumed that the event was successful and was permitted.
+  OutcomeComplexType outcome = 10;
+  // Any other event data that does not fit into a schema element but may be useful for the purpose of audit.
+  repeated DataComplexType data = 11 [
+    (buf.validate.field).repeated = {
+      min_items: 0
+    }
+  ];
+}

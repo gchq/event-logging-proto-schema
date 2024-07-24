@@ -1,0 +1,16 @@
+// default.proto at 0:0
+syntax = "proto3";
+package default;
+
+message AbstractTopLevelComplexType {
+  string abstract_top_level_complex_type_attribute = 1;
+  string should_be_prefixed = 2;
+  string repeated_element = 3;
+}
+message ConcreteTopLevelComplexType {
+  string abstract_top_level_complex_type_attribute = 1;
+  string attr_should_be_prefixed = 2;
+  string concrete_top_level_complex_type_attribute = 11;
+  repeated string repeated_element = 21;
+  string should_be_prefixed = 22;
+}

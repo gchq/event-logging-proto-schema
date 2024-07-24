@@ -1,0 +1,46 @@
+// event_logging/v4/network_event_action_complex_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "event_logging/v4/network_outcome_complex_type.proto";
+import "buf/validate/validate.proto";
+
+// Describes an event involving some form of activity on a computer network.
+message NetworkEventActionComplexType {
+  // The action of a server binding a network socket to a port and IP address.
+  NetworkOutcomeComplexType bind = 1 [
+    (buf.validate.field).required = true
+  ];
+  // The action of a client system establishing a connection with a server.
+  NetworkOutcomeComplexType connect = 2 [
+    (buf.validate.field).required = true
+  ];
+  // The action of opening an unnamed socket that is bound to an address.
+  NetworkOutcomeComplexType open = 3 [
+    (buf.validate.field).required = true
+  ];
+  // The action of closing an open socket or connection.
+  NetworkOutcomeComplexType close = 4 [
+    (buf.validate.field).required = true
+  ];
+  // The action of sending data on a socket.
+  NetworkOutcomeComplexType send = 5 [
+    (buf.validate.field).required = true
+  ];
+  // The action of receiving data on a socket.
+  NetworkOutcomeComplexType receive = 6 [
+    (buf.validate.field).required = true
+  ];
+  // The action of making a socket listen for connections.
+  NetworkOutcomeComplexType listen = 7 [
+    (buf.validate.field).required = true
+  ];
+  // The action of network traffic being permitted by an Access Control List (ACL).
+  NetworkOutcomeComplexType permit = 8 [
+    (buf.validate.field).required = true
+  ];
+  // The action of network traffic being denied by an Access Control List (ACL).
+  NetworkOutcomeComplexType deny = 9 [
+    (buf.validate.field).required = true
+  ];
+}

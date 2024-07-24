@@ -1,0 +1,28 @@
+// default.proto at 0:0
+syntax = "proto3";
+package default;
+
+message TariffZoneRefStructure {
+
+  string value = 1;
+}
+message RelationshipStructure {
+  string id = 1;
+}
+message ValidityParameters_RelStructure {
+  string id = 1;
+  string modification_set = 2;
+  repeated SequenceWrapper_ValidityParameters_RelStructure sequence_wrapper = 3;
+
+  message SequenceWrapper_ValidityParameters_RelStructure {
+    TariffZoneRefType tariff_zone_ref = 1;
+  }
+}
+message TariffZoneRefType {
+
+  string value = 1;
+}
+message OneToManyRelationshipStructure {
+  string id = 1;
+  string modification_set = 2;
+}

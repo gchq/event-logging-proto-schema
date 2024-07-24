@@ -1,0 +1,16 @@
+// event_logging/v4/permission_attribute_simple_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "buf/validate/validate.proto";
+
+// The types of permission that can be assigned to an entity such as a document.
+enum PermissionAttributeSimpleType {
+  // Default
+  PERMISSION_ATTRIBUTE_SIMPLE_TYPE_UNSPECIFIED = 0;
+  PERMISSION_ATTRIBUTE_SIMPLE_TYPE_AUTHOR = 1;
+  PERMISSION_ATTRIBUTE_SIMPLE_TYPE_OWNER = 2;
+  PERMISSION_ATTRIBUTE_SIMPLE_TYPE_READ = 3;
+  PERMISSION_ATTRIBUTE_SIMPLE_TYPE_WRITE = 4;
+  PERMISSION_ATTRIBUTE_SIMPLE_TYPE_EXECUTE = 5;
+}

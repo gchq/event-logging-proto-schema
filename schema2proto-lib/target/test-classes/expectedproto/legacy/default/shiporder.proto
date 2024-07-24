@@ -1,0 +1,23 @@
+// default.proto at 0:0
+syntax = "proto3";
+package default;
+
+message ShiporderType {
+  string orderid = 1;
+  string orderperson = 2;
+  ShiptoType shipto = 3;
+  repeated ItemType item = 4;
+
+  message ShiptoType {
+    string name = 1;
+    string address = 2;
+    string city = 3;
+    string country = 4;
+  }
+  message ItemType {
+    string title = 1;
+    string note = 2;
+    uint32 quantity = 3;
+    double price = 4;
+  }
+}

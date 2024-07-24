@@ -1,0 +1,133 @@
+// event_logging/v4/event_detail_complex_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "event_logging/v4/alert_complex_type.proto";
+import "event_logging/v4/approval_complex_type.proto";
+import "event_logging/v4/authenticate_complex_type.proto";
+import "event_logging/v4/authorise_complex_type.proto";
+import "event_logging/v4/copy_complex_type.proto";
+import "event_logging/v4/create_complex_type.proto";
+import "event_logging/v4/data_complex_type.proto";
+import "event_logging/v4/delete_complex_type.proto";
+import "event_logging/v4/export_complex_type.proto";
+import "event_logging/v4/import_complex_type.proto";
+import "event_logging/v4/install_complex_type.proto";
+import "event_logging/v4/move_complex_type.proto";
+import "event_logging/v4/network_event_action_complex_type.proto";
+import "event_logging/v4/print_complex_type.proto";
+import "event_logging/v4/process_complex_type.proto";
+import "event_logging/v4/purpose_complex_type.proto";
+import "event_logging/v4/receive_complex_type.proto";
+import "event_logging/v4/search_complex_type.proto";
+import "event_logging/v4/send_complex_type.proto";
+import "event_logging/v4/uninstall_complex_type.proto";
+import "event_logging/v4/update_complex_type.proto";
+import "event_logging/v4/view_complex_type.proto";
+import "buf/validate/validate.proto";
+
+// This type describes the details of what happened in the event: the type of the event, why it happened and the event action.
+message EventDetailComplexType {
+  // A name/code/ID to uniquely identify the logical event type within the service providing the events. E.g. a Windows eventId (i.e. representing 'Failed logon', 'Change password attempt', etc.) or for application logging: SaveRecord, ViewUserRecord, ViewSearchResults, etc. The granularity will depend on the application. Typically, the number of unique TypeIds will be in the 10s. Note, the values of the TypeId are not meant to be globally consistent, they will only be relevant within that service providing the events.
+  string type_id = 1 [
+    (buf.validate.field).required = true
+  ];
+  // Some human-readable descriptive text for the event type.
+  string description = 2;
+  // The purpose/justification assigned to this event for user actions that are required to be justified for reasons of corporate policy, e.g. transferring data to removable media, viewing personnel records or making a high value payment.
+  PurposeComplexType purpose = 3;
+  // Used to record authentication events such as logon and logoff. Also used for recording authentication by physical access controls, e.g. doors/turnstiles. All authentication events that originate from a client device should record details of the client device in the event source.
+  AuthenticateComplexType authenticate = 4 [
+    (buf.validate.field).required = true
+  ];
+  // All events related to account management such as adding and removing user and system accounts.
+  AuthoriseComplexType authorise = 5 [
+    (buf.validate.field).required = true
+  ];
+  // Any events related to searching for data should use this element.
+  SearchComplexType search = 6 [
+    (buf.validate.field).required = true
+  ];
+  // All events related to copying data, files, documents, etc. should use this element.
+  CopyComplexType copy = 7 [
+    (buf.validate.field).required = true
+  ];
+  // All events related to moving data should use this element.
+  MoveComplexType move = 8 [
+    (buf.validate.field).required = true
+  ];
+  // All events related to creating data should use this element.
+  CreateComplexType create = 9 [
+    (buf.validate.field).required = true
+  ];
+  // All events related to viewing data should use this element. Note that viewing data is subtly different from reading data. This event is to be used when data is displayed to an end user and not for data read by an application.
+  ViewComplexType view = 10 [
+    (buf.validate.field).required = true
+  ];
+  // All events related to importing data should use this element. An import could include any batch insert of data from an external source or uploading a file.
+  ImportComplexType import_field = 11 [
+    (buf.validate.field).required = true
+  ];
+  // All events related to exporting data should use this element. An export could include activities such as downloading data from an application or generating a report.
+  ExportComplexType export = 12 [
+    (buf.validate.field).required = true
+  ];
+  // All events related to updating data should use this element.
+  UpdateComplexType update = 13 [
+    (buf.validate.field).required = true
+  ];
+  // All events related to deleting data should use this element.
+  DeleteComplexType delete = 14 [
+    (buf.validate.field).required = true
+  ];
+  // Whenever processes such as applications or services are started, stopped etc., this should be recorded in this element. It also covers the running of batch processes or jobs.
+  ProcessComplexType process = 15 [
+    (buf.validate.field).required = true
+  ];
+  // All events related to printing should use this element.
+  PrintComplexType print = 16 [
+    (buf.validate.field).required = true
+  ];
+  // Details about installation of either hardware or software.
+  InstallComplexType install = 17 [
+    (buf.validate.field).required = true
+  ];
+  // Details about removal of either hardware or software.
+  UninstallComplexType uninstall = 18 [
+    (buf.validate.field).required = true
+  ];
+  // Any events related to network traffic, filtering or access should be recorded using this element.
+  NetworkEventActionComplexType network = 19 [
+    (buf.validate.field).required = true
+  ];
+  // An alert event according to the system producing the event, e.g. an event raised when an anti-malware system finds malware.
+  AlertComplexType alert = 20 [
+    (buf.validate.field).required = true
+  ];
+  // Used for send events that are at a higher level than a network/send event, e.g. sending an email
+  SendComplexType send = 21 [
+    (buf.validate.field).required = true
+  ];
+  // Used for receive events that are at a higher level than a network/receive event, e.g. receiving an email
+  ReceiveComplexType receive = 22 [
+    (buf.validate.field).required = true
+  ];
+  // Any events relating to the action of approving/accepting or rejecting something, e.g. an approval step in a workflow, accepting a license agreement, or acceptable use policy. The event may relate to one user approving the work/action of another user or a single user accepting something.
+  ApprovalComplexType approval = 23 [
+    (buf.validate.field).required = true
+  ];
+  // This element should be used were the type of the event cannot be described by any of the other event actions, or the event type is unknown.
+  UnknownType unknown = 24 [
+    (buf.validate.field).required = true
+  ];
+
+  // This type should be used were the type of the event cannot be described by any of the other event actions, or the event type is unknown.
+  message UnknownType {
+    // Any other event data that does not fit into a schema element but may be useful for the purpose of audit.
+    repeated DataComplexType data = 1 [
+      (buf.validate.field).repeated = {
+        min_items: 0
+      }
+    ];
+  }
+}

@@ -1,0 +1,45 @@
+// event_logging/v4/authenticate_complex_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "event_logging/v4/authenticate_action_simple_type.proto";
+import "event_logging/v4/authenticate_logon_type_simple_type.proto";
+import "event_logging/v4/authenticate_outcome_complex_type.proto";
+import "event_logging/v4/data_complex_type.proto";
+import "event_logging/v4/device_complex_type.proto";
+import "event_logging/v4/user_complex_type.proto";
+import "buf/validate/validate.proto";
+
+// Used to record authentication events such as logon and logoff. All authentication events that originate from a client device should record details of the client device in the event source.
+message AuthenticateComplexType {
+  // The authentication action that was performed, e.g. Logon, Logoff.
+  AuthenticateActionSimpleType action = 1 [
+    (buf.validate.field).required = true
+  ];
+  // This indicates the type of logon. For example, Microsoft Windows has several logon types such as Interactive (logon to domain), RemoteInteractive (logon to remote machine), CachedInteractive (logon to local machine using cached domain information due to loss of network).
+  AuthenticateLogonTypeSimpleType logon_type = 2 [
+    (buf.validate.field).enum = {
+      defined_only: true
+    }
+  ];
+  // The user who the authentication action relates to.
+  UserComplexType user = 3 [
+    (buf.validate.field).required = true
+  ];
+  // Where a device authenticates with another device, this is the device that initiates the authentication action.
+  DeviceComplexType device = 4 [
+    (buf.validate.field).required = true
+  ];
+  // The group the authentication action relates to.
+  GroupComplexType group = 5 [
+    (buf.validate.field).required = true
+  ];
+  // Used to determine if the action was successful. If omitted it is assumed that the event was successful and was permitted.
+  AuthenticateOutcomeComplexType outcome = 11;
+  // Any other event data that does not fit into a schema element but may be useful for the purpose of audit.
+  repeated DataComplexType data = 12 [
+    (buf.validate.field).repeated = {
+      min_items: 0
+    }
+  ];
+}

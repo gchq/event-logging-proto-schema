@@ -1,0 +1,22 @@
+// event_logging/v4/term_complex_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "event_logging/v4/term_condition_simple_type.proto";
+import "buf/validate/validate.proto";
+
+// Describes a field to search and what to search for using name, condition and value, e.g. Title Contains 'Fox' or Title Equals 'The Quick Brown Fox'.
+message TermComplexType {
+  // The name of the search field.
+  string name = 1 [
+    (buf.validate.field).required = true
+  ];
+  // The search condition, e.g. Contains, !Contains, Exists etc.
+  TermConditionSimpleType condition = 2 [
+    (buf.validate.field).required = true
+  ];
+  // The value that the condition is operating on.
+  string value = 3 [
+    (buf.validate.field).required = true
+  ];
+}

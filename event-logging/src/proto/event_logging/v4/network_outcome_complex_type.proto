@@ -1,0 +1,33 @@
+// event_logging/v4/network_outcome_complex_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "event_logging/v4/data_complex_type.proto";
+import "event_logging/v4/multi_object_complex_type.proto";
+import "event_logging/v4/network_location_complex_type.proto";
+import "event_logging/v4/outcome_complex_type.proto";
+import "buf/validate/validate.proto";
+
+// A type to describe some activity on a network along with the outcome of that activity.
+message NetworkOutcomeComplexType {
+  // The source device that is attempting the network action.
+  NetworkLocationComplexType source = 1 [
+    (buf.validate.field).required = true
+  ];
+  // The destination device for the network action.
+  NetworkLocationComplexType destination = 2;
+  // The name of the process responsible for the network action.
+  string process_name = 3;
+  // If the network action is related to message transfer from one place to another then this element describes the message.
+  MultiObjectComplexType payload = 4;
+  // The network boundary filter rule that was fired to generate this event.
+  string rule = 5;
+  // Used to determine if the action was successful. If omitted it is assumed that the event was successful and was permitted.
+  OutcomeComplexType outcome = 6;
+  // Any other event data that does not fit into a schema element but may be useful for the purpose of audit.
+  repeated DataComplexType data = 7 [
+    (buf.validate.field).repeated = {
+      min_items: 0
+    }
+  ];
+}

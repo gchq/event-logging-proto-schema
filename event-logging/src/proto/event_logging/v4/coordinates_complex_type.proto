@@ -1,0 +1,17 @@
+// event_logging/v4/coordinates_complex_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "buf/validate/validate.proto";
+
+// The geographic coordinates of the location (i.e. the latitude/longitude).
+message CoordinatesComplexType {
+  // Geographic coordinate specifying the north/south position on the earth's surface, expressed as decimal degrees from the equator (0). -90 (South) to +90 (North).
+  double latitude = 1 [
+    (buf.validate.field).required = true
+  ];
+  // Geographic coordinate specifying the east/west position on the earth's surface, expressed as decimal degrees from the Greenwich Meridian (0). -180 (West) to +180 (East).
+  double longitude = 2 [
+    (buf.validate.field).required = true
+  ];
+}

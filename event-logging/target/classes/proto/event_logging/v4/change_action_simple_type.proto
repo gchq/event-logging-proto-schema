@@ -1,0 +1,21 @@
+// event_logging/v4/change_action_simple_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "buf/validate/validate.proto";
+
+// The action performed by the file/directory monitor, e.g. starting to scan files for changes, or the detection of a file change.
+enum ChangeActionSimpleType {
+  // Default
+  CHANGE_ACTION_SIMPLE_TYPE_UNSPECIFIED = 0;
+  // The file/directory monitor is started.
+  CHANGE_ACTION_SIMPLE_TYPE_START_SCAN = 1;
+  // The file/directory monitor is stopped.
+  CHANGE_ACTION_SIMPLE_TYPE_STOP_SCAN = 2;
+  // A new file had been added to the monitored directory.
+  CHANGE_ACTION_SIMPLE_TYPE_FILE_ADDED = 3;
+  // A file has been removed from the monitored directory.
+  CHANGE_ACTION_SIMPLE_TYPE_FILE_REMOVED = 4;
+  // A monitored file has been modified.
+  CHANGE_ACTION_SIMPLE_TYPE_FILE_MODIFIED = 5;
+}

@@ -1,0 +1,71 @@
+// event_logging/v4/send_complex_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "event_logging/v4/data_complex_type.proto";
+import "event_logging/v4/device_complex_type.proto";
+import "event_logging/v4/multi_object_complex_type.proto";
+import "event_logging/v4/outcome_complex_type.proto";
+import "event_logging/v4/user_complex_type.proto";
+import "buf/validate/validate.proto";
+
+// Describes the action of sending something (e.g. a file, data, object, etc.) from a source location/application/system/user to a destination.
+message SendComplexType {
+  // The initiator(s) of the object or resource sent or received. An initiator can be a user and/or device.
+  SourceType source = 1 [
+    (buf.validate.field).required = true
+  ];
+  // The destination(s) of the object or resource sent or received. A destination can be a user and/or device.
+  DestinationType destination = 2 [
+    (buf.validate.field).required = true
+  ];
+  // If the network action is related to message transfer from one place to another then this element describes the message.
+  MultiObjectComplexType payload = 3;
+  // Used to determine if the action was successful. If omitted it is assumed that the event was successful and was permitted.
+  OutcomeComplexType outcome = 4;
+  // Any other event data that does not fit into a schema element but may be useful for the purpose of audit.
+  repeated DataComplexType data = 5 [
+    (buf.validate.field).repeated = {
+      min_items: 0
+    }
+  ];
+
+  // The initiator(s) of the object or resource sent or received. An initiator can be a user and/or device.
+  message SourceType {
+    repeated ChoiceWrapper_SourceType choice_wrapper = 1 [
+      (buf.validate.field).repeated = {
+        min_items: 1
+      }
+    ];
+  
+    message ChoiceWrapper_SourceType {
+      // The user that sent the payload.
+      UserComplexType user = 1 [
+        (buf.validate.field).required = true
+      ];
+      // The device that sent the payload.
+      DeviceComplexType device = 2 [
+        (buf.validate.field).required = true
+      ];
+    }
+  }
+  // The destination(s) of the object or resource sent or received. A destination can be a user and/or device.
+  message DestinationType {
+    repeated ChoiceWrapper_DestinationType choice_wrapper = 1 [
+      (buf.validate.field).repeated = {
+        min_items: 1
+      }
+    ];
+  
+    message ChoiceWrapper_DestinationType {
+      // The user that the payload is being sent to
+      UserComplexType user = 1 [
+        (buf.validate.field).required = true
+      ];
+      // The device that the payload is being sent to
+      DeviceComplexType device = 2 [
+        (buf.validate.field).required = true
+      ];
+    }
+  }
+}

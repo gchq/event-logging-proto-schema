@@ -1,0 +1,16 @@
+// event_logging/v4/copy_move_outcome_reason_simple_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "buf/validate/validate.proto";
+
+// The types of reason for failure during copy or move operations.
+enum CopyMoveOutcomeReasonSimpleType {
+  // Default
+  COPY_MOVE_OUTCOME_REASON_SIMPLE_TYPE_UNSPECIFIED = 0;
+  COPY_MOVE_OUTCOME_REASON_SIMPLE_TYPE_DEVICE_FULL = 1;
+  COPY_MOVE_OUTCOME_REASON_SIMPLE_TYPE_IO_ERROR = 2;
+  COPY_MOVE_OUTCOME_REASON_SIMPLE_TYPE_INVALID_PATH = 3;
+  COPY_MOVE_OUTCOME_REASON_SIMPLE_TYPE_PERMISSION_DENIED = 4;
+  COPY_MOVE_OUTCOME_REASON_SIMPLE_TYPE_READ_ONLY = 5;
+}

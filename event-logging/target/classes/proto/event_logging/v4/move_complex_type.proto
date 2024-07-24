@@ -1,0 +1,28 @@
+// event_logging/v4/move_complex_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "event_logging/v4/copy_move_outcome_complex_type.proto";
+import "event_logging/v4/data_complex_type.proto";
+import "event_logging/v4/multi_object_complex_type.proto";
+import "buf/validate/validate.proto";
+
+// Captures data relevant to move events, e.g. moving a file from one folder/device to another.
+message MoveComplexType {
+  // The source of the data being moved.
+  MultiObjectComplexType source = 1 [
+    (buf.validate.field).required = true
+  ];
+  // The destination for the data being moved.
+  MultiObjectComplexType destination = 2 [
+    (buf.validate.field).required = true
+  ];
+  // Used to determine if the move was successful. If omitted it is assumed that the move was successful and was permitted.
+  CopyMoveOutcomeComplexType outcome = 3;
+  // Any other event data that does not fit into a schema element but may be useful for the purpose of audit.
+  repeated DataComplexType data = 4 [
+    (buf.validate.field).repeated = {
+      min_items: 0
+    }
+  ];
+}

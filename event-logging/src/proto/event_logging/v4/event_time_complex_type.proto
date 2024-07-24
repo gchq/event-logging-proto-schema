@@ -1,0 +1,17 @@
+// event_logging/v4/event_time_complex_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "event_logging/v4/device_complex_type.proto";
+import "google/protobuf/timestamp.proto";
+import "buf/validate/validate.proto";
+
+// Describes the time the event was created.
+message EventTimeComplexType {
+  // This element contains information about the time the event was created.
+  google.protobuf.Timestamp time_created = 1 [
+    (buf.validate.field).required = true
+  ];
+  // This is an optional element to be used to indicate the time source that the event creation time has been synchronised with. In most circumstances it is assumed that the event time has been synchronised with the corporate time service where the generating device resides so the inclusion of this element is not required.
+  DeviceComplexType time_source = 2;
+}

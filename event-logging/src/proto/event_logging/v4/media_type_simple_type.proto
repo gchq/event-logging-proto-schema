@@ -1,0 +1,20 @@
+// event_logging/v4/media_type_simple_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "buf/validate/validate.proto";
+
+// The types of removable media.
+enum MediaTypeSimpleType {
+  // Default
+  MEDIA_TYPE_SIMPLE_TYPE_UNSPECIFIED = 0;
+  MEDIA_TYPE_SIMPLE_TYPE_HARD_DISK = 1;
+  MEDIA_TYPE_SIMPLE_TYPE_USB_MASS_STORAGE = 2;
+  MEDIA_TYPE_SIMPLE_TYPE_BLU_RAY = 3;
+  MEDIA_TYPE_SIMPLE_TYPE_DVD = 4;
+  MEDIA_TYPE_SIMPLE_TYPE_CD = 5;
+  MEDIA_TYPE_SIMPLE_TYPE_FLOPPY_DISK = 6;
+  MEDIA_TYPE_SIMPLE_TYPE_TAPE = 7;
+  MEDIA_TYPE_SIMPLE_TYPE_MEMORY_CARD = 8;
+  MEDIA_TYPE_SIMPLE_TYPE_OTHER = 9;
+}

@@ -1,0 +1,24 @@
+// event_logging/v4/import_complex_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "event_logging/v4/data_complex_type.proto";
+import "event_logging/v4/multi_object_complex_type.proto";
+import "event_logging/v4/outcome_complex_type.proto";
+import "buf/validate/validate.proto";
+
+// Captures data relevant to an import operation, e.g. importing a file from outside an application into the application.
+message ImportComplexType {
+  // The source of the data being imported.
+  MultiObjectComplexType source = 1;
+  // The destination for the data being imported.
+  MultiObjectComplexType destination = 2;
+  // Used to determine if the import was successful. If omitted it is assumed that the import was successful and was permitted.
+  OutcomeComplexType outcome = 3;
+  // Any other event data that does not fit into a schema element but may be useful for the purpose of audit.
+  repeated DataComplexType data = 4 [
+    (buf.validate.field).repeated = {
+      min_items: 0
+    }
+  ];
+}

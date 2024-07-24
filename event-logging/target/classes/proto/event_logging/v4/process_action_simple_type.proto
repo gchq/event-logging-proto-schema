@@ -1,0 +1,20 @@
+// event_logging/v4/process_action_simple_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "buf/validate/validate.proto";
+
+// The types of action in a process event, e.g. executing a shell script.
+enum ProcessActionSimpleType {
+  // Default
+  PROCESS_ACTION_SIMPLE_TYPE_UNSPECIFIED = 0;
+  PROCESS_ACTION_SIMPLE_TYPE_STARTUP = 1;
+  PROCESS_ACTION_SIMPLE_TYPE_SHUTDOWN = 2;
+  PROCESS_ACTION_SIMPLE_TYPE_EXECUTE = 3;
+  PROCESS_ACTION_SIMPLE_TYPE_TERMINATE = 4;
+  PROCESS_ACTION_SIMPLE_TYPE_CHANGE_DIR = 5;
+  PROCESS_ACTION_SIMPLE_TYPE_CALL = 6;
+  PROCESS_ACTION_SIMPLE_TYPE_ACCESS = 7;
+  PROCESS_ACTION_SIMPLE_TYPE_REQUEST_OBJECT_HANDLE = 8;
+  PROCESS_ACTION_SIMPLE_TYPE_REGISTER = 9;
+}

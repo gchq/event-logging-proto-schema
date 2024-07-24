@@ -1,0 +1,17 @@
+// event_logging/v4/alert_priority_simple_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "buf/validate/validate.proto";
+
+// The priorities that can be assigned to an alert, e.g. an error in a system or the alert from the detection of malware. They indicate how important it is to resolve or mitigate the alert.
+enum AlertPrioritySimpleType {
+  // Default
+  ALERT_PRIORITY_SIMPLE_TYPE_UNSPECIFIED = 0;
+  ALERT_PRIORITY_SIMPLE_TYPE_NONE = 1;
+  ALERT_PRIORITY_SIMPLE_TYPE_LOW = 2;
+  ALERT_PRIORITY_SIMPLE_TYPE_NORMAL = 3;
+  ALERT_PRIORITY_SIMPLE_TYPE_HIGH = 4;
+  ALERT_PRIORITY_SIMPLE_TYPE_URGENT = 5;
+  ALERT_PRIORITY_SIMPLE_TYPE_IMMEDIATE = 6;
+}

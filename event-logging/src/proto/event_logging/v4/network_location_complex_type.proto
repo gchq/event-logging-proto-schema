@@ -1,0 +1,36 @@
+// event_logging/v4/network_location_complex_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "event_logging/v4/data_complex_type.proto";
+import "event_logging/v4/device_complex_type.proto";
+import "event_logging/v4/network_protocol_simple_type.proto";
+import "buf/validate/validate.proto";
+
+// Describes an end point within a network. This may be an application running on a device or a network appliance such as a switch.
+message NetworkLocationComplexType {
+  // A device at the source or destination involved in the network activity.
+  DeviceComplexType device = 1;
+  // The application being used by the source or destination.
+  string application = 2;
+  // The transport protocol being used by the source or destination.
+  NetworkProtocolSimpleType transport_protocol = 3 [
+    (buf.validate.field).enum = {
+      defined_only: true
+    }
+  ];
+  // The Internet Control Message Protocol type number. See https://www.iana.org/assignments/icmp-parameters/icmp-parameters.xhtml
+  int32 icmp_type = 4;
+  // The HTTP method, e.g. GET, POST, DELETE, PUT etc
+  string http_method = 5;
+  // The application protocol being used by the source or destination.
+  string application_protocol = 6;
+  // The port being used by the source or destination.
+  int32 port = 7;
+  // Any other event data that does not fit into a schema element but may be useful for the purpose of audit.
+  repeated DataComplexType data = 8 [
+    (buf.validate.field).repeated = {
+      min_items: 0
+    }
+  ];
+}

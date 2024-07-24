@@ -1,0 +1,19 @@
+// event_logging/v4/data_complex_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "buf/validate/validate.proto";
+
+// Describes any other event data that does not fit into a schema element but may be useful for the purpose of audit. The recursive nature of this type means it can be used to model a tree of data.
+message DataComplexType {
+  // The name of the data item. The taxonomy of the data items may be defined by the system sending the events or defined centrally for all systems to use.
+  string name = 1;
+  // The simple string value for the data item.
+  string value = 2;
+  // A child data item that may itself have descendants.
+  repeated DataComplexType data = 3 [
+    (buf.validate.field).repeated = {
+      min_items: 0
+    }
+  ];
+}

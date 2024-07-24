@@ -1,0 +1,14 @@
+// event_logging/v4/event_chain_complex_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "event_logging/v4/activity_complex_type.proto";
+import "buf/validate/validate.proto";
+
+// This type can be used to create relationships between different events, i.e. where one event is the child of another.
+message EventChainComplexType {
+  // The event that this event has a relationship to or is referenced by.
+  ActivityComplexType activity = 1 [
+    (buf.validate.field).required = true
+  ];
+}

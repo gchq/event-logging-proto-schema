@@ -1,0 +1,64 @@
+// event_logging/v4/user_details_complex_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "event_logging/v4/data_complex_type.proto";
+import "buf/validate/validate.proto";
+
+// Describes the person represented by a user account or identity.
+message UserDetailsComplexType {
+  // A unique identifier used across the business to identify this person.
+  string id = 1;
+  // A person's staff number.
+  string staff_number = 2;
+  // The person's surname.
+  string surname = 3;
+  // The person's initials.
+  string initials = 4;
+  // The person's title.
+  string title = 5;
+  // The person's given name. If a preferred name also exists then use KnownAs for this preferred name, otherwise use the same name for both elements.
+  string given_name = 6;
+  // The name that this person is known as.
+  string known_as = 7;
+  // Is the person an employee or a contractor.
+  string person_type = 8;
+  // The business group.
+  string group = 9;
+  // The business unit within the business group.
+  string unit = 10;
+  // The position within the business unit.
+  string position = 11;
+  // The role that the person is in.
+  string role = 12;
+  // The grade required for the current post.
+  string grade_of_post = 13;
+  // Is the person full-time, part-time etc.
+  string employment_type = 14;
+  // The employment status of the person, e.g. Active, Retired, Maternity Leave, Sabbatical Leave, etc.
+  string employment_status = 15;
+  // The person's nationality.
+  string nationality = 16;
+  // The building that the person usually works in.
+  string location = 17;
+  // The room number or name that the person usually works in.
+  string room_number = 18;
+  // The person's primary or internal phone number or extension.
+  string phone = 19;
+  // The person's secondary phone number or extension.
+  string secondary_phone = 20;
+  // The staff number of the person's supervisor or line manager.
+  string supervisor_staff_number = 21;
+  // When this person's current position is scheduled to end, e.g. the end date of a fixed term employment contract.
+  uint32 occupancy_end_date = 22;
+  // Describes a person's main employing organisation irrespective of who they are contracted or seconded to, or are performing an internship with.
+  string organisation = 23;
+  // Describes which organisation is currently hosting a person if they are on secondment, internship or are contracted to work for.
+  string host_organisation = 24;
+  // Any other user data that does not fit into a schema element but may be useful for the purpose of audit.
+  repeated DataComplexType data = 25 [
+    (buf.validate.field).repeated = {
+      min_items: 0
+    }
+  ];
+}

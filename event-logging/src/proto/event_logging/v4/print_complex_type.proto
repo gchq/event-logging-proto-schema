@@ -1,0 +1,75 @@
+// event_logging/v4/print_complex_type.proto at 0:0
+syntax = "proto3";
+package event_logging.v4;
+
+import "event_logging/v4/data_complex_type.proto";
+import "event_logging/v4/device_complex_type.proto";
+import "event_logging/v4/document_complex_type.proto";
+import "event_logging/v4/outcome_complex_type.proto";
+import "event_logging/v4/print_action_simple_type.proto";
+import "event_logging/v4/print_settings_orientation_simple_type.proto";
+import "google/protobuf/timestamp.proto";
+import "buf/validate/validate.proto";
+
+// Describes an event relating to a printer, e.g. printing a document.
+message PrintComplexType {
+  // The print action that was performed, e.g. CreateJob.
+  PrintActionSimpleType action = 1 [
+    (buf.validate.field).required = true
+  ];
+  // Describes the print job that the event relates to.
+  PrintJobType print_job = 2 [
+    (buf.validate.field).required = true
+  ];
+  // The printer settings that are to be used for the print job.
+  PrintSettingsType print_settings = 3;
+  // Describes the printer to use for the print job.
+  DeviceComplexType printer = 4;
+  // Used to determine if the action was successful. If omitted it is assumed that the event was successful and was permitted.
+  OutcomeComplexType outcome = 5;
+  // Any other event data that does not fit into a schema element but may be useful for the purpose of audit.
+  repeated DataComplexType data = 6 [
+    (buf.validate.field).repeated = {
+      min_items: 0
+    }
+  ];
+
+  // Describes the print job that the event relates to.
+  message PrintJobType {
+    // Describes the document being printed.
+    DocumentComplexType document = 1 [
+      (buf.validate.field).required = true
+    ];
+    // The number of pages being printed.
+    uint32 pages = 2 [
+      (buf.validate.field).uint32.gte = 0
+    ];
+    // The size of the print job in bytes.
+    uint32 size = 3 [
+      (buf.validate.field).uint32.gte = 0
+    ];
+    // The time that the print job was submitted.
+    google.protobuf.Timestamp submitted = 4;
+  }
+  // The printer settings that are to be used for the print job.
+  message PrintSettingsType {
+    // The paper size, e.g. A4.
+    string paper_size = 1;
+    // The paper orientation, e.g. Portrait, Landscape.
+    PrintSettingsOrientationSimpleType orientation = 2 [
+      (buf.validate.field).enum = {
+        defined_only: true
+      }
+    ];
+    // True if printing in colour. Most printing is performed in black and white so this defaults to false and can therefore be omitted if printing in black and white.
+    bool colour = 3;
+    // True if fonts are to be used on the printing device. Using device fonts reduces the size of the print job as no font information needs to be supplied to the printer. However, using device fonts will result in different output on different printers. Most print jobs will not use device fonts so this defaults to false and can therefore be omitted if device fonts are not being used.
+    bool device_fonts = 4;
+    // Any other event data that does not fit into a schema element but may be useful for the purpose of audit.
+    repeated DataComplexType data = 5 [
+      (buf.validate.field).repeated = {
+        min_items: 0
+      }
+    ];
+  }
+}
